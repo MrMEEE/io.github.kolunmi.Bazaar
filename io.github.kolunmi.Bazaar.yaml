@@ -21,6 +21,10 @@ finish-args:
   - --filesystem=/var/tmp
   # We need to be able to clean up application data
   - --filesystem=~/.var/app
+  # Read-only access to the host's admin-controlled Bazaar configuration; this is the
+  # only way the main/content config and blocklist are sourced, and users cannot
+  # override it from within the app (no env var or CLI flag exists for these paths)
+  - --filesystem=/etc/bazaar:ro
   # Not having this makes it so libflatpak misbehaves and can't detect all flatpaks installed by users properly
   # "(x) flatpaks need to be updated" when they in fact don't
   - --system-talk-name=org.freedesktop.Accounts
@@ -42,14 +46,16 @@ modules:
     buildsystem: meson
     config-opts:
       - -Dsandboxed_libflatpak=true
-      # Set this to `etc` so that distributors can override `host-etc` perms
-      - -Dhardcoded_main_config_path=/run/host/etc/bazaar/bazaar.yaml
-      - -Dhardcoded_content_config_path=/run/host/etc/bazaar/config.yaml
-      - -Dhardcoded_blocklist_path=/run/host/etc/bazaar/blocklist.txt
+      # Hardcoded at build time so the host's /etc/bazaar config is always used and
+      # can't be overridden at runtime; paired with the --filesystem=/etc/bazaar:ro
+      # permission above (bind-mounted directly, not through /run/host)
+      - -Dhardcoded_main_config_path=/etc/bazaar/bazaar.yaml
+      - -Dhardcoded_content_config_path=/etc/bazaar/config.yaml
+      - -Dhardcoded_blocklist_path=/etc/bazaar/blocklist.txt
     sources:
       - type: git
-        url: https://gitlab.gnome.org/World/bazaar.git
-        commit: 2c8c34e73bc855a81b9e35aa70f691bae2d50892
+        url: https://github.com/MrMEEE/bazaar.git
+        branch: flathub-customization
 
     modules:
       - name: libdex
