@@ -253,7 +253,7 @@ modules:
                     sources:
                       - type: archive
                         url: https://github.com/libfuse/libfuse/archive/refs/tags/fuse-2.9.9.tar.gz
-                        sha256: 636cdf34bb5675ec67ea6a73cee826b913b235c4f11f17c3b3797a98721549e8
+                        sha256: e57a24721177c3b3dd71cb9239ca46b4dee283db9388d48f7ccd256184982194
                         #url: https://github.com/libfuse/libfuse/releases/download/fuse-2.9.9/fuse-2.9.9.tar.gz
                         #sha256: d0e69d5d608cc22ff4843791ad097f554dd32540ddc9bed7638cc6fea7c1b4b5
                       - type: patch
