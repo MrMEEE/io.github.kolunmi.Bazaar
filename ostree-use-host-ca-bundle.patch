@@ -1,0 +1,18 @@
+diff --git a/src/libostree/ostree-fetcher-curl.c b/src/libostree/ostree-fetcher-curl.c
+--- a/src/libostree/ostree-fetcher-curl.c
++++ b/src/libostree/ostree-fetcher-curl.c
+@@ -877,6 +877,14 @@ initiate_next_curl_request (FetcherRequest *req, GTask *task)
+       rc = curl_easy_setopt (req->easy, CURLOPT_CAINFO, self->tls_ca_db_path);
+       g_assert_cmpint (rc, ==, CURLM_OK);
+     }
++  else if (g_file_test ("/run/host/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem",
++                        G_FILE_TEST_IS_REGULAR))
++    {
++      rc = curl_easy_setopt (
++          req->easy, CURLOPT_CAINFO,
++          "/run/host/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem");
++      g_assert_cmpint (rc, ==, CURLM_OK);
++    }
+ 
+   if ((self->config_flags & OSTREE_FETCHER_FLAGS_TLS_PERMISSIVE) > 0)
+     {
