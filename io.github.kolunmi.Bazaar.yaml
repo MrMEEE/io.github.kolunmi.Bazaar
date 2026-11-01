@@ -232,6 +232,8 @@ modules:
                       project-id: 10899
                       tag-template: v$version
                       is-important: true
+                  - type: patch
+                    path: ostree-use-host-ca-bundle.patch
 
                 modules:
                   - name: libfuse
