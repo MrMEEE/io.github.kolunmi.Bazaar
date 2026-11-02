@@ -139,6 +139,8 @@ modules:
               type: git
               tag-pattern: ^(1\.[0-8][02468]\..*)$
               is-important: true
+          - type: patch
+            path: flatpak-use-host-ca-bundle.patch
 
         modules:
           - name: python3-pyparsing
