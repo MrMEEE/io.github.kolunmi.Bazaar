@@ -204,6 +204,8 @@ modules:
               is-important: true
           - type: patch
             path: revokefs-propagate-fuse-main-failure.patch
+          - type: patch
+            path: flatpak-use-host-ca-bundle.patch
 
         modules:
           - name: python3-pyparsing

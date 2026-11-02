@@ -1,0 +1,15 @@
+diff --git a/common/flatpak-utils-http.c b/common/flatpak-utils-http.c
+--- a/common/flatpak-utils-http.c
++++ b/common/flatpak-utils-http.c
+@@ -627,6 +627,11 @@ flatpak_download_http_uri_once (FlatpakHttpSession    *session,
+   curl_easy_setopt (curl, CURLOPT_WRITEDATA, (void *)data);
+   curl_easy_setopt (curl, CURLOPT_HEADERDATA, (void *)data);
+ 
++  if (g_file_test ("/run/host/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem",
++                   G_FILE_TEST_IS_REGULAR))
++    curl_easy_setopt (curl, CURLOPT_CAINFO,
++                      "/run/host/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem");
++
+   if (data->certificates)
+     {
+       if (data->certificates->ca_cert_file)
